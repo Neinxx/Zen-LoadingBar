@@ -1,0 +1,47 @@
+/* 
+ * Zen Browser Mod via Cosine: Global Gemini Loading Bar
+ * 真正的 100% 横贯屏幕浏览器层加载条
+ */
+
+#navigator-toolbox {
+    position: relative;
+}
+
+#navigator-toolbox::after {
+    content: "";
+    position: absolute;
+    bottom: 0px; 
+    left: 0;
+    width: 100vw; 
+    height: 2px; /* 极细线条 */
+    z-index: 2147483647;
+    pointer-events: none;
+    
+    /* Gemini 极美流体渐变 */
+    background: linear-gradient(90deg, #4285F4, #9B72CB, #D96570, #9B72CB, #4285F4);
+    box-shadow: 0 1px 6px rgba(155, 114, 203, 0.6);
+    background-size: 200% 100%;
+    
+    transform-origin: left;
+    transform: scaleX(0); 
+    opacity: 0;
+    
+    /* 瞬间抽回动画 */
+    transition: opacity 0.4s ease-out, transform 0s linear 0.4s;
+}
+
+/* 检测加载状态 */
+:root:has(.tabbrowser-tab[selected="true"][busy]) #navigator-toolbox::after {
+    opacity: 1;
+    transform: scaleX(0.85); /* 缓慢逼近 85% */
+    
+    /* 涓流缓动曲线 */
+    transition: transform 10s cubic-bezier(0.1, 0.8, 0.05, 1), opacity 0.2s ease-in;
+    animation: gemini-shimmer 2s infinite linear;
+}
+
+/* 流光能量效果 */
+@keyframes gemini-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: 0% 0; }
+}
