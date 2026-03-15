@@ -3,39 +3,5 @@
   "description": "典藏版科幻加载条。点击设置图标可自定义颜色、粗细与光晕大小。",
   "version": "3.0.0",
   "author": "Your Name",
-  "type": "chrome",
-  "preferences":[
-    {
-      "name": "clb-thickness",
-      "type": "string",
-      "title": "进度条粗细 (Thickness)",
-      "description": "默认 3px。如果你喜欢极细，可改为 2px。",
-      "value": "3px"
-    },
-    {
-      "name": "clb-glow-size",
-      "type": "string",
-      "title": "光晕爆发大小 (Glow Spread)",
-      "description": "退场爆闪时的光晕半径，默认 14px。",
-      "value": "14px"
-    },
-    {
-      "name": "clb-color-1",
-      "type": "color",
-      "title": "主色调 (Primary Color)",
-      "value": "#4285F4"
-    },
-    {
-      "name": "clb-color-2",
-      "type": "color",
-      "title": "过渡色 (Secondary Color)",
-      "value": "#9B72CB"
-    },
-    {
-      "name": "clb-color-3",
-      "type": "color",
-      "title": "高潮色 (Accent Color)",
-      "value": "#D96570"
-    }
-  ]
+  "type": "chrome"
 }
