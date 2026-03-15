@@ -1,7 +1,7 @@
 {
   "name": "Gemini Loading Bar",
-  "description": "真正的横贯屏幕 Gemini 风格加载进度条 (适配 Cosine)",
+  "description": "真正的横贯屏幕 Gemini 风格加载进度条 ",
   "version": "1.0.0",
-  "author": "Your Name",
+  "author": "Neinxx",
   "type": "chrome"
 }
