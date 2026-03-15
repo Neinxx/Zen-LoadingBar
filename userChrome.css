@@ -1,6 +1,7 @@
 /* 
  * Zen Browser Mod via Cosine: Global Gemini Loading Bar (Ultimate Cinematic Edition)
  * 极致手感 + 电影级光效：彗星之光、能量呼吸、曲率跃迁闪光
+ * 优化：新增过渡层，解决发光头部与背景的视觉脱节问题
  */
 
 /* =========================================
@@ -16,12 +17,17 @@
     pointer-events: none;
     
     /* 🌠【灵魂特效 1：彗星之光】
-       使用双层背景：顶层是一个永远贴在最右侧的白热化发光头部，底层是滚动的 Gemini 流体渐变 
+       优化：新增第三层过渡背景，衔接发光头部和渐变底色
+       三层背景结构：
+       1. 过渡层：在发光头部前增加15px的白色到透明渐变，实现自然过渡
+       2. 发光头部：永远贴在最右侧的白热化发光头部
+       3. 底层渐变：滚动的 Gemini 流体渐变
     */
     background-image: 
-        linear-gradient(90deg, transparent calc(100% - 20px), rgba(255, 255, 255, 1) 100%),
+        linear-gradient(90deg, transparent calc(100% - 55px), rgba(255, 255, 255, 0.4) calc(100% - 40px), transparent calc(100% - 25px)),
+        linear-gradient(90deg, transparent calc(100% - 40px), rgba(255, 255, 255, 1) 100%),
         linear-gradient(90deg, #4285F4, #9B72CB, #D96570, #9B72CB, #4285F4);
-    background-size: 100% 100%, 200% 100%;
+    background-size: 100% 100%, 100% 100%, 200% 100%;
     background-repeat: no-repeat;
     
     width: 100vw; 
@@ -68,10 +74,10 @@
     100% { width: 85vw; } 
 }
 
-/* 独立控制双层背景：第一层彗星头永远不动，第二层流体渐变无限轮回 */
+/* 独立控制三层背景：前两层永远不动，第三层流体渐变无限轮回 */
 @keyframes gemini-shimmer {
-    0%   { background-position: 0 0, 200% 0; }
-    100% { background-position: 0 0, -200% 0; }
+    0%   { background-position: 0 0, 0 0, 200% 0; }
+    100% { background-position: 0 0, 0 0, -200% 0; }
 }
 
 /* 🫁【灵魂特效 3：能量呼吸】
