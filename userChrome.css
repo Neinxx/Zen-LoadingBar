@@ -19,7 +19,7 @@
        使用双层背景：顶层是一个永远贴在最右侧的白热化发光头部，底层是滚动的 Gemini 流体渐变 
     */
     background-image: 
-        linear-gradient(90deg, transparent calc(100% - 40px), rgba(255, 255, 255, 1) 100%),
+        linear-gradient(90deg, transparent calc(100% - 20px), rgba(255, 255, 255, 1) 100%),
         linear-gradient(90deg, #4285F4, #9B72CB, #D96570, #9B72CB, #4285F4);
     background-size: 100% 100%, 200% 100%;
     background-repeat: no-repeat;
