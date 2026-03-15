@@ -1,7 +1,16 @@
 /* 
- * Zen Browser Mod via Cosine: Global Gemini Loading Bar (Seamless Blend Edition)
- * 修复了彗星头脱节的问题，让前端白光与 Gemini 本体完美融合
+ * Zen Browser Mod via Cosine: Cinematic Loading Bar (Configurable Edition)
+ * 接入配置菜单面板，支持完全自定义
  */
+
+:root {
+    /* 接收来自 Cosine 面板的变量，并设置安全默认值防止失效 */
+    --local-thickness: var(--clb-thickness, 3px);
+    --local-glow: var(--clb-glow-size, 14px);
+    --local-c1: var(--clb-color-1, #4285F4);
+    --local-c2: var(--clb-color-2, #9B72CB);
+    --local-c3: var(--clb-color-3, #D96570);
+}
 
 /* =========================================
    第一阶段：基础状态与退场特效
@@ -11,30 +20,23 @@
     position: fixed; 
     top: 0px;        
     left: 0;
-    height: 3px; /* 稍微加到 3px，给色彩融合留出足够的纵向空间 */
+    height: var(--local-thickness); /* 接入粗细配置 */
     z-index: 2147483647;
     pointer-events: none;
     
-    /* 🌠【无缝融合的彗星之光】
-       抛弃硬核的像素裁剪，改用柔和的百分比过渡。
-       前 60% 是完全透明的，露出底部的 Gemini 色彩；
-       从 60% 到 85%，像温度升高一样慢慢叠加上白色半透明；
-       最后 15% 达到最亮的纯白。
-       这样无论进度条多长，白光都像是从本体里“长”出来的。
-    */
+    /* 无缝融合的彗星之光 + 动态配色 */
     background-image: 
         linear-gradient(90deg, rgba(255,255,255,0) 60%, rgba(255,255,255,0.4) 85%, rgba(255,255,255,1) 100%),
-        linear-gradient(90deg, #4285F4, #9B72CB, #D96570, #9B72CB, #4285F4);
+        linear-gradient(90deg, var(--local-c1), var(--local-c2), var(--local-c3), var(--local-c2), var(--local-c1));
         
-    /* 顶层高光锁定长度(100%)，底层流光拉长(200%)以供动画滚动 */
     background-size: 100% 100%, 200% 100%;
     background-repeat: no-repeat;
     
     width: 100vw; 
     opacity: 0;   
     
-    /* 💥 退场时的残影爆闪 */
-    box-shadow: 0 0 14px rgba(255, 255, 255, 0.9), 0 0 5px rgba(255, 255, 255, 0.6);
+    /* 爆发时的白色残影光晕，接入光晕大小配置 */
+    box-shadow: 0 0 var(--local-glow) rgba(255, 255, 255, 0.9), 0 0 5px rgba(255, 255, 255, 0.6);
     
     transition: width 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
                 box-shadow 0.3s ease-out,
@@ -42,13 +44,13 @@
 }
 
 /* =========================================
-   第二阶段：激活状态 (网页努力加载中)
+   第二阶段：激活状态
    ========================================= */
 :root:has(.tabbrowser-tab[selected="true"][busy]) #navigator-toolbox::after {
     opacity: 1; 
     
-    /* 加载中压制阴影，让光晕染上紫蓝色，更贴合本体 */
-    box-shadow: 0 0 6px rgba(155, 114, 203, 0.6);
+    /* 激活时压制阴影，使用第一主色调作为环境微光 */
+    box-shadow: 0 0 6px rgb(from var(--local-c2) r g b / 0.6);
     
     animation: 
         apple-zeno-growth 10s cubic-bezier(0.1, 0.8, 0.05, 1) forwards,
@@ -61,7 +63,6 @@
 /* =========================================
    第三阶段：动画引擎
    ========================================= */
-
 @keyframes apple-zeno-growth {
     0%   { width: 0vw; }
     15%  { width: 40vw; } 
@@ -73,9 +74,9 @@
     100% { background-position: 0 0, -200% 0; }
 }
 
-/* 🫁 能量呼吸：动态提取 Gemini 标志性的粉蓝渐变阴影 */
+/* 🫁 能量呼吸：动态提取用户配置的颜色，自动生成透明光晕 */
 @keyframes neon-pulse {
-    0%   { box-shadow: 0 1px 4px rgba(66, 133, 244, 0.6), 0 0 2px rgba(155, 114, 203, 0.4); }
-    50%  { box-shadow: 0 1px 12px rgba(217, 101, 112, 1), 0 0 6px rgba(155, 114, 203, 0.8); }
-    100% { box-shadow: 0 1px 4px rgba(66, 133, 244, 0.6), 0 0 2px rgba(155, 114, 203, 0.4); }
+    0%   { box-shadow: 0 1px 4px rgb(from var(--local-c1) r g b / 0.6), 0 0 2px rgb(from var(--local-c2) r g b / 0.4); }
+    50%  { box-shadow: 0 1px 12px rgb(from var(--local-c3) r g b / 1.0), 0 0 6px rgb(from var(--local-c2) r g b / 0.8); }
+    100% { box-shadow: 0 1px 4px rgb(from var(--local-c1) r g b / 0.6), 0 0 2px rgb(from var(--local-c2) r g b / 0.4); }
 }
